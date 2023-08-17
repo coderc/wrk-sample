@@ -1,24 +1,26 @@
-
 -- example HTTP POST script which demonstrates setting the
 -- HTTP method, body, and adding a header
 
+-- ⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️必须检查⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️
 -- 指定运行路径
 local runPath = "/Users/shaochong/iplayable/wrk/"
 -- 指定从哪个文件中读取request数据
-local file = "10000-data-webeye-vlionmobi"
+local file = "sample.request"
+-- ⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️必须检查⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️
 
 -- 开启debug会显示每次请求的exchange和body
-local debug = false
+local debug = true
 
 fileOpen = io.open(runPath .. file, "r")
 io.input(fileOpen)
 -- local body = io.read("*a")
 -- io.close(fileOpen)
 
+-- 设置target server的ip和端口
 wrk.scheme = "http"
-wrk.host = "0.0.0.0"
+wrk.host = "127.0.0.1"
 wrk.port = 8088
-path = "/"
+path = "/dsp/dsp_dispatcher"
 wrk.method = "POST"
 wrk.body   = io.read()
 wrk.headers["Content-Type"] = "application/x-www-form-urlencoded"
@@ -60,7 +62,7 @@ end
 
 -- delay 设置每个请求的间隔时间(单位:毫秒)
 delay = function()
-    return 0
+    return 2000
 end
 
 request = function()
@@ -72,16 +74,15 @@ request = function()
         print("exchange or body is nil")
         return
     end
-    wrk.path = "/dsp/dsp_dispatcher?exchange=" .. exchange
+    wrk.path = path .. "?exchange=" .. exchange
     wrk.body   = body
-
     return wrk.format()
 end
 
 -- 单线程单连接的测试shell
--- ./wrk/wrk -d4s -c1 -t1 -s main.lua http://0.0.0.0:8088
+-- ./wrk/wrk -d4s -c1 -t1 --latency -s main.lua http://0.0.0.0:8088
 -- 双线程双连接的测试shell
--- ./wrk/wrk -d10s -c2 -t2 -s main.lua http://0.0.0.0:8088
+-- ./wrk/wrk -d10s -c2 -t2 --latency -s main.lua http://0.0.0.0:8088
 
 -- 两万qps的压测
 -- ./wrk -t16 -c1000 -d10s --latency http://adxalb-147739866.us-west-2.elb.amazonaws.com/v1/adx
