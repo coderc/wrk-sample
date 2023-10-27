@@ -115,6 +115,5 @@ end
 -- ./wrk -t16 -c5000 -d610s --latency http://adxalb-147739866.us-west-2.elb.amazonaws.com/v1/adx
 -- ./wrk -t1 -c1 -d3s --latency http://adxalb-147739866.us-west-2.elb.amazonaws.com/v1/adx
 
-
 -- ./wrk/wrk -d1m -c1 -t1 -s main.lua http://192.168.3.57:8348
 -- ./wrk/wrk -d1m -c4 -t4 -s main.lua http://13.212.91.81:8008
