@@ -15,7 +15,7 @@ func main() {
 	r.Match([]string{http.MethodPost, http.MethodGet}, "/dsp/dsp_dispatcher", func(c *gin.Context) {
 		body, _ := io.ReadAll(c.Request.Body)
 
-		fmt.Printf("total: [%10d], param: [%s]  exchange: [%s]  body: [%s]\n", total.Add(1), c.Request.URL.RawQuery, c.Query("exchange"), string(body[:20]))
+		fmt.Printf("total: [%10d], param: [%s]  exchange: [%s]  body: [%s]\n", total.Add(1), c.Request.URL.RawQuery, c.Query("exchange"), string(body[:40]))
 	})
 
 	r.Run(":8088")

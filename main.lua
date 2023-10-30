@@ -11,10 +11,10 @@ end
 
 -- ⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️必须检查⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️
 -- 指定运行路径
-local runPath = "/Users/shaochong/iplayable/wrk/"
+local runPath = "/root/shaochong_dir/wrk-sample/"
 -- 指定从哪个文件中读取request数据
-local file = "10000-data-webeye-vlionmobi.request"
-local delayNumber = 10 -- 单位: ms
+local file = "request-01.txt"
+local delayNumber = 0 -- 单位: ms
 local splitChar = ","
 -- ⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️必须检查⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️
 
@@ -26,6 +26,7 @@ route = "/dsp/dsp_dispatcher"
 wrk.method = "POST"
 wrk.body   = io.read()
 wrk.headers["Content-Type"] = "application/x-www-form-urlencoded"
+wrk.headers["host"] = "www.tualta.com"
 
 findIdx = function(str, ch)
     idx = -1
@@ -59,6 +60,7 @@ readLine = function()
         return nil, nil
     end
     kvs.exchange = string.sub(line, 1, idx - 1)
+    kvs.debug = "false"
     kvs.body = string.sub(line, idx + 2, string.len(line) - 1)
     consoleDebug(map2str(kvs))
     return kvs
@@ -106,6 +108,7 @@ end
 
 -- 单线程单连接的测试shell
 -- ./wrk/wrk -d3s -c1 -t1 --latency -s main.lua http://127.0.0.1:8088
+-- ./wrk/wrk -d3s -c1 -t1 --latency -s main.lua http://alb-27s6lgjph505zmdk5t.ap-southeast-1.alb.aliyuncs.com
 -- ./wrk -d4s -c1 -t1 --latency -s main.luatest.tualta.com
 -- 双线程双连接的测试shell
 -- ./wrk/wrk -d10s -c2 -t2 --latency -s main.lua http://0.0.0.0:8088
