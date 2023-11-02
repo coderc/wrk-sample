@@ -13,7 +13,7 @@ end
 -- 指定运行路径
 local runPath = "/root/shaochong_dir/wrk-sample/"
 -- 指定从哪个文件中读取request数据
-local file = "request-01.txt"
+local file = "request-02.txt"
 local delayNumber = 0 -- 单位: ms
 local splitChar = ","
 -- ⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️必须检查⬆️⬆️⬆️⬆️⬆️⬆️⬆️⬆️
@@ -27,6 +27,7 @@ wrk.method = "POST"
 wrk.body   = io.read()
 wrk.headers["Content-Type"] = "application/x-www-form-urlencoded"
 wrk.headers["host"] = "www.tualta.com"
+
 
 findIdx = function(str, ch)
     idx = -1

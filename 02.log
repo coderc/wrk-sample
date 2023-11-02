@@ -1,0 +1,14 @@
+nohup: ignoring input
+Running 1s test @ http://alb-27s6lgjph505zmdk5t.ap-southeast-1.alb.aliyuncs.com
+  8 threads and 16 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    61.71ms   28.18ms 145.23ms   62.99%
+    Req/Sec    31.36      9.05    50.00     70.37%
+  Latency Distribution
+     50%   63.16ms
+     75%   82.44ms
+     90%   97.96ms
+     99%  122.08ms
+  254 requests in 1.10s, 399.95KB read
+Requests/sec:    230.71
+Transfer/sec:    363.27KB
