@@ -11,9 +11,14 @@ function consoleLog(s)
     print(s)
 end
 
+-- 命令中携带的参数
 local params = {}
 
+-- 文件名在参数table中的key
+local KEY_FILE = "file"
+
 function init(args)
+    -- 处理命令中的传参 参数传递格式 在命令末尾追加[ -- key1=val1 key2=val2 ]
     for i = 1, #args do
         local key, value = string.match(args[i], "([^=]+)=([^=]+)")
         if key and value then
@@ -21,17 +26,18 @@ function init(args)
         end
     end
 
-    consoleDebug(params["log"])
-    file = io.open(params["log"], "r")
+    consoleDebug(params[KEY_FILE])
+    file = io.open(params[KEY_FILE], "r")
     io.input(file)
 end
 
+-- readLine 读取文件中的一行 读取结束后重新打开文件
 readLine = function()
     line = io.read()
     if line == nil
     then
         io.close(file)
-        file = io.open(params["log"], "r")
+        file = io.open(params[KEY_FILE], "r")
         io.input(file)
         line = io.read()
     end
