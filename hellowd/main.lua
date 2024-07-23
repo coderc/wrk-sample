@@ -27,6 +27,7 @@ function init(args)
     end
 
     consoleDebug(params[KEY_FILE])
+    -- 初始化结束后打开文件
     file = io.open(params[KEY_FILE], "r")
     io.input(file)
 end
